@@ -29,8 +29,10 @@ fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaP
 }
 
 
-fun Fragment.startVLC(source: String?, vlcLayout: VLCVideoLayout?, isLive: Boolean, onCompletionListener: () -> Unit) {
-    val TAG = this::javaClass.name
+fun Fragment.startVLC(source: String?, layout: VLCVideoLayout?, isLive: Boolean, autoRestart : Boolean, onCompletionListener: (Boolean, String) -> Unit) {
+    val TAG = this::class.java.simpleName
+
+
     if (source != null)
         if (activity != null) {
             activity?.runOnUiThread {
@@ -49,7 +51,7 @@ fun Fragment.startVLC(source: String?, vlcLayout: VLCVideoLayout?, isLive: Boole
                     mMediaPlayer = map[key]
                 }
 
-                mMediaPlayer!!.attachViews(vlcLayout!!, null, true, false)
+                mMediaPlayer!!.attachViews(layout!!, null, true, false)
 
                 media = Media(mLibVLC, Uri.parse(source))
 
@@ -67,41 +69,26 @@ fun Fragment.startVLC(source: String?, vlcLayout: VLCVideoLayout?, isLive: Boole
                 mMediaPlayer.setEventListener { event ->
                     try {
                         when (event.type) {
-                            MediaPlayer.Event.MediaChanged -> Log.i(
-                                TAG,
-                                "@MediaChanged:  ${mMediaPlayer.isPlaying}"
-                            )
-                            MediaPlayer.Event.Opening -> Log.i(
-                                TAG,
-                                "@Opening:  ${mMediaPlayer.isPlaying}"
-                            )
-                            MediaPlayer.Event.Buffering -> Log.i(
-                                TAG,
-                                "@Buffering:  ${event.buffering.roundToInt().toFloat()}"
-                            )
-                            MediaPlayer.Event.Playing -> Log.i(
-                                TAG,
-                                "@Playing:  ${mMediaPlayer.isPlaying}"
-                            )
-                            MediaPlayer.Event.Paused -> Log.i(
-                                TAG,
-                                "@Paused: ${mMediaPlayer.isPlaying}"
-                            )
+                            MediaPlayer.Event.MediaChanged ->onCompletionListener.invoke(false,"@MediaChanged")
+                            MediaPlayer.Event.Opening -> onCompletionListener.invoke(false,"@Opening")
+                            MediaPlayer.Event.Buffering -> onCompletionListener.invoke(false,"@Buffering")
+                            MediaPlayer.Event.Playing ->onCompletionListener.invoke(false,"@Playing")
+                            MediaPlayer.Event.Paused ->  onCompletionListener.invoke(false,"@Paused")
                             MediaPlayer.Event.Stopped -> {
-                                onCompletionListener.invoke()
-                                if(mMediaPlayer.isPlaying)
-                                    mMediaPlayer.stop()
-                                mMediaPlayer.detachViews()
-                                mMediaPlayer.release()
-                                mLibVLC!!.release()
-                                Log.i(TAG, "@OnEnd")
+                                onCompletionListener.invoke(true,"@Stopped")
+                                if(autoRestart) {
+                                    this.startVLC(source, layout, isLive,autoRestart,onCompletionListener)
+                                }else{
+                                    if(mMediaPlayer.isPlaying)
+                                        mMediaPlayer.stop()
+                                    mMediaPlayer.detachViews()
+                                    mMediaPlayer.release()
+                                    mLibVLC!!.release()
+                                }
                             }
-                            MediaPlayer.Event.EndReached -> Log.i(
-                                TAG,
-                                "@EndReached: ${mMediaPlayer.isPlaying}"
-                            )
+                            MediaPlayer.Event.EndReached -> onCompletionListener.invoke(true,"@EndReached")
                             MediaPlayer.Event.EncounteredError -> {
-                                Log.i(TAG, "@EncounteredError:  $source")
+                                onCompletionListener.invoke(true,"@EncounteredError")
                                 if(mMediaPlayer.isPlaying)
                                     mMediaPlayer.stop()
                                 mMediaPlayer.detachViews()
@@ -109,28 +96,22 @@ fun Fragment.startVLC(source: String?, vlcLayout: VLCVideoLayout?, isLive: Boole
                                 mLibVLC!!.release()
 
                             }
-                            MediaPlayer.Event.TimeChanged -> Log.i(
-                                TAG,
+                            MediaPlayer.Event.TimeChanged ->  onCompletionListener.invoke(false,
                                 "@TimeChanged: position= ${event.timeChanged / 1000L}"
                             )
-                            MediaPlayer.Event.PositionChanged -> Log.i(
-                                TAG,
+                            MediaPlayer.Event.PositionChanged -> onCompletionListener.invoke(false,
                                 "@PositionChanged: ${Calendar.getInstance().time} +  =>  + ${source}, playing =${mMediaPlayer.isPlaying}"
                             )
-                            MediaPlayer.Event.SeekableChanged -> Log.i(
-                                TAG,
+                            MediaPlayer.Event.SeekableChanged ->  onCompletionListener.invoke(false,
                                 "@SeekableChanged: playing ${mMediaPlayer.isPlaying}"
                             )
-                            MediaPlayer.Event.Vout -> Log.i(
-                                TAG,
+                            MediaPlayer.Event.Vout ->  onCompletionListener.invoke(false,
                                 "@Vout: playing = ${mMediaPlayer.isPlaying}"
                             )
-                            MediaPlayer.Event.ESDeleted -> Log.i(
-                                TAG,
+                            MediaPlayer.Event.ESDeleted ->  onCompletionListener.invoke(false,
                                 "@ESDeleted: playing =  ${mMediaPlayer.isPlaying}"
                             )
-                            MediaPlayer.Event.ESSelected -> Log.i(
-                                TAG,
+                            MediaPlayer.Event.ESSelected ->  onCompletionListener.invoke(false,
                                 "@ESSelected:  playing = ${mMediaPlayer.isPlaying}"
                             )
                         }
