@@ -23,13 +23,13 @@ class DigitalSignageActivity : AppCompatActivity() {
             KeyEvent.KEYCODE_PAGE_UP,
             KeyEvent.KEYCODE_CHANNEL_UP,
             KeyEvent.KEYCODE_DPAD_UP -> {
-                fragment.play(source1)
+                fragment.play(fragment.source1)
                 return true
             }
             KeyEvent.KEYCODE_PAGE_DOWN,
             KeyEvent.KEYCODE_CHANNEL_DOWN,
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                fragment.play(source2)
+                fragment.play(fragment.source2)
                 return true
             }
         }

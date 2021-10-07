@@ -11,6 +11,38 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
+/**
+ * Mapping the vlc player as mutable
+ */
+val playerMap = mutableMapOf<Fragment, HashMap<LibVLC,MediaPlayer>>()
+var Fragment.vlcPlayer: HashMap<LibVLC,MediaPlayer>?
+    get() = playerMap[this]?: hashMapOf()
+    set(value) {
+        playerMap[this] = value!!
+    }
+
+/**
+ * Mapping the vlc uri as mutable
+ */
+val playerSourceMap = mutableMapOf<Fragment,String>()
+var Fragment.vlcSource: String
+    get() = playerSourceMap[this]?:""
+    set(value) {
+        playerSourceMap[this] = value
+    }
+
+fun Fragment.stopVLCPlayer(playerMap : HashMap<LibVLC, MediaPlayer>)
+{
+    for(key in playerMap.keys)
+    {
+        if (playerMap[key]!!.isPlaying) {
+            playerMap[key]!!.stop()
+            playerMap[key]!!.detachViews()
+            playerMap[key]!!.release()
+        }
+    }
+}
+
 fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaPlayer> {
     val args = ArrayList<String>()
     val map = hashMapOf<LibVLC, MediaPlayer>()
@@ -28,133 +60,143 @@ fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaP
 }
 
 
+fun Fragment.stopVLC(){
+    vlcPlayer?.let {
+        if(it.size > 0)
+          stopVLCPlayer(it)
+    }
+}
+
+
 fun Fragment.startVLC(
     source: String?,
     layout: VLCVideoLayout?,
     isLive: Boolean,
     autoRestart: Boolean,
     onCompletionListener: (String, Int) -> Unit
-) {
+)  {
     val TAG = this::class.java.simpleName
+    var mLibVLC: LibVLC? = null
+    var mMediaPlayer: MediaPlayer? = null
 
     Log.i(TAG, "source = $source")
     Log.i(TAG, "layout = $layout")
     Log.i(TAG, "isLive = $isLive")
     Log.i(TAG, "auto restart = $autoRestart")
 
-    if (source != null)
-        if (activity != null) {
-            activity?.runOnUiThread {
+    if(source!=null)
+    {
+        if(vlcSource.isNotEmpty())
+        {
+            if(vlcSource.contains(source))
+                return
+        }
+    }
+    if (activity != null) {
+        activity?.runOnUiThread {
+            vlcSource=source!!
+            val media: Media?
 
-                var mLibVLC: LibVLC? = null
-                var mMediaPlayer: MediaPlayer? = null
-                val media: Media?
+            val map = setVLCMediaPLayer(isLive)
 
-                val map = if (isLive)
-                    setVLCMediaPLayer(true)
-                else
-                    setVLCMediaPLayer(false)
+            for (key in map.keys) {
+                mLibVLC = key
+                mMediaPlayer = map[key]!!
+            }
 
-                for (key in map.keys) {
-                    mLibVLC = key
-                    mMediaPlayer = map[key]
-                }
+            mMediaPlayer?.let {
+                it.apply {
+                    attachViews(layout!!, null, true, false)
 
-                mMediaPlayer!!.attachViews(layout!!, null, true, false)
+                    media = Media(mLibVLC, Uri.parse(source))
 
-                media = Media(mLibVLC, Uri.parse(source))
-
-                if (isLive) {
-                    media.addOption(":network-caching=100")
-                    media.addOption(":clock-jitter=0")
-                    media.addOption(":clock-synchro=0")
-                }
-
-                mMediaPlayer.media = media
-                mMediaPlayer.updateVideoSurfaces()
-                mMediaPlayer.videoScale = MediaPlayer.ScaleType.SURFACE_FILL
-                media.release()
-
-                mMediaPlayer.setEventListener { event ->
-                    try {
-                        when (event.type) {
-                            MediaPlayer.Event.MediaChanged -> onCompletionListener.invoke(
-                                "@MediaChanged",
-                                event.type
-                            )
-                            MediaPlayer.Event.Opening -> onCompletionListener.invoke(
-                                "@Opening",
-                                event.type
-                            )
-                            MediaPlayer.Event.Buffering -> onCompletionListener.invoke(
-                                "@Buffering",
-                                event.type
-                            )
-                            MediaPlayer.Event.Playing -> onCompletionListener.invoke(
-                                "@Playing",
-                                event.type
-                            )
-                            MediaPlayer.Event.Paused -> onCompletionListener.invoke(
-                                "@Paused",
-                                event.type
-                            )
-                            MediaPlayer.Event.Stopped -> {
-                                onCompletionListener.invoke("@Stopped", event.type)
-                                if (autoRestart) {
-                                    this.startVLC(
-                                        source,
-                                        layout,
-                                        isLive,
-                                        autoRestart,
-                                        onCompletionListener
-                                    )
-                                } else {
-                                    if (mMediaPlayer.isPlaying)
-                                        mMediaPlayer.stop()
-                                    mMediaPlayer.detachViews()
-                                    mMediaPlayer.release()
+                    if (isLive) {
+                        media.addOption(":network-caching=100")
+                        media.addOption(":clock-jitter=0")
+                        media.addOption(":clock-synchro=0")
+                    }
+                    this.media = media
+                    updateVideoSurfaces()
+                    videoScale = MediaPlayer.ScaleType.SURFACE_FILL
+                    media.setHWDecoderEnabled(true, true)
+                    media.release()
+                    setEventListener { event ->
+                        try {
+                            when (event.type) {
+                                MediaPlayer.Event.MediaChanged -> onCompletionListener.invoke(
+                                    "@MediaChanged",
+                                    event.type
+                                )
+                                MediaPlayer.Event.Opening -> onCompletionListener.invoke(
+                                    "@Opening",
+                                    event.type
+                                )
+                                MediaPlayer.Event.Buffering -> onCompletionListener.invoke(
+                                    "@Buffering",
+                                    event.type
+                                )
+                                MediaPlayer.Event.Playing -> onCompletionListener.invoke(
+                                    "@Playing",
+                                    event.type
+                                )
+                                MediaPlayer.Event.Paused -> onCompletionListener.invoke(
+                                    "@Paused",
+                                    event.type
+                                )
+                                MediaPlayer.Event.Stopped -> {
+                                    onCompletionListener.invoke("@Stopped", event.type)
+                                    if (autoRestart) {
+                                        startVLC(source, layout, isLive, autoRestart, onCompletionListener)
+                                    } else {
+                                        if (isPlaying)
+                                            stop()
+                                        detachViews()
+                                        release()
+                                        mLibVLC!!.release()
+                                    }
+                                }
+                                MediaPlayer.Event.EndReached -> onCompletionListener.invoke(
+                                    "@EndReached",
+                                    event.type
+                                )
+                                MediaPlayer.Event.EncounteredError -> {
+                                    onCompletionListener.invoke("@EncounteredError", event.type)
+                                    if (isPlaying)
+                                        stop()
+                                    detachViews()
+                                    release()
                                     mLibVLC!!.release()
                                 }
+                                MediaPlayer.Event.TimeChanged -> onCompletionListener.invoke(
+                                    "@TimeChanged: position= ${event.timeChanged / 1000L}", event.type
+                                )
+                                MediaPlayer.Event.PositionChanged -> onCompletionListener.invoke(
+                                    "@PositionChanged: ${Calendar.getInstance().time} +  =>  + ${source}, playing =$isPlaying",
+                                    event.type
+                                )
+                                MediaPlayer.Event.SeekableChanged -> onCompletionListener.invoke(
+                                    "@SeekableChanged: playing $isPlaying", event.type
+                                )
+                                MediaPlayer.Event.Vout -> onCompletionListener.invoke(
+                                    "@Vout: playing = $isPlaying", event.type
+                                )
+                                MediaPlayer.Event.ESDeleted -> onCompletionListener.invoke(
+                                    "@ESDeleted: playing =  $isPlaying", event.type
+                                )
+                                MediaPlayer.Event.ESSelected -> onCompletionListener.invoke(
+                                    "@ESSelected:  playing = $isPlaying", event.type
+                                )
                             }
-                            MediaPlayer.Event.EndReached -> onCompletionListener.invoke(
-                                "@EndReached",
-                                event.type
-                            )
-                            MediaPlayer.Event.EncounteredError -> {
-                                onCompletionListener.invoke("@EncounteredError", event.type)
-                                if (mMediaPlayer.isPlaying)
-                                    mMediaPlayer.stop()
-                                mMediaPlayer.detachViews()
-                                mMediaPlayer.release()
-                                mLibVLC!!.release()
 
-                            }
-                            MediaPlayer.Event.TimeChanged -> onCompletionListener.invoke(
-                                "@TimeChanged: position= ${event.timeChanged / 1000L}", event.type
-                            )
-                            MediaPlayer.Event.PositionChanged -> onCompletionListener.invoke(
-                                "@PositionChanged: ${Calendar.getInstance().time} +  =>  + ${source}, playing =${mMediaPlayer.isPlaying}",
-                                event.type
-                            )
-                            MediaPlayer.Event.SeekableChanged -> onCompletionListener.invoke(
-                                "@SeekableChanged: playing ${mMediaPlayer.isPlaying}", event.type
-                            )
-                            MediaPlayer.Event.Vout -> onCompletionListener.invoke(
-                                "@Vout: playing = ${mMediaPlayer.isPlaying}", event.type
-                            )
-                            MediaPlayer.Event.ESDeleted -> onCompletionListener.invoke(
-                                "@ESDeleted: playing =  ${mMediaPlayer.isPlaying}", event.type
-                            )
-                            MediaPlayer.Event.ESSelected -> onCompletionListener.invoke(
-                                "@ESSelected:  playing = ${mMediaPlayer.isPlaying}", event.type
-                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
-
-                    } catch (e: Exception) {
-                        e.printStackTrace()
                     }
+                    play()
                 }
-                mMediaPlayer.play()
             }
+
         }
+        vlcPlayer = hashMapOf(mLibVLC!! to mMediaPlayer!!)
+    }
 }
