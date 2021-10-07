@@ -6,19 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import org.videolan.libvlc.MediaPlayer
 import org.videolan.libvlc.util.VLCVideoLayout
-import java.util.*
-import kotlin.math.roundToInt
+
 
 class DigitalSignageFragment : Fragment() {
 
     private val TAG = "DigitalSignageFragment"
     private var mVideoLayout: VLCVideoLayout? = null
 
+    private val source = "file:///storage/emulated/0/Android/full_always_be_my_maybe.mp4"
 
-    var source: String = "http://192.168.200.3:8080/media/videos_vod/full_lightsout.mp4"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,19 +34,30 @@ class DigitalSignageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mVideoLayout = view.findViewById(R.id.video_layout)
 
-        /**
-         * source = the source to play
-         * layout = org.videolan.libvlc.util.VLCVideoLayout
-         * isLive = TRUE - if live source (eg. udp, rtsp, etc), FALSE if not
-         * autoRestart = TRUE - restart forever, FALSE = play once
-         */
-
-        startVLC(source = source, layout = mVideoLayout, isLive = false, autoRestart = false) { completed, status ->
-            if (completed) {
-                Log.i(TAG, "@video completed")
-            }
-            Log.v(TAG, status)
-        }
-
+        play(source)
     }
+
+
+   fun play(source: String?)
+   {
+       /**
+        * source = the source to play
+        * layout = org.videolan.libvlc.util.VLCVideoLayout
+        * isLive = TRUE - if live source (eg. udp, rtsp, etc), FALSE if not
+        * autoRestart = TRUE - restart forever, FALSE = play once
+        */
+
+       startVLC(source, layout = mVideoLayout, isLive = false, autoRestart = true) { status,event ->
+           when(event){
+               MediaPlayer.Event.Stopped -> run{
+                   Log.i(TAG, "@video completed")
+               }
+               MediaPlayer.Event.EncounteredError -> run{
+                   Log.i(TAG, "@video encountered error")
+               }
+           }
+           Log.v(TAG, status)
+       }
+   }
+
 }
