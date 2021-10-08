@@ -1,5 +1,6 @@
 package com.ph.meshtv.tv.player
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,7 +9,9 @@ import org.videolan.libvlc.MediaPlayer
 import org.videolan.libvlc.Media
 import org.videolan.libvlc.util.VLCVideoLayout
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
+import kotlin.math.roundToInt
 
 
 /**
@@ -21,15 +24,6 @@ var Fragment.vlcPlayer: HashMap<LibVLC,MediaPlayer>?
         playerMap[this] = value!!
     }
 
-/**
- * Mapping the vlc uri as mutable
- */
-val playerSourceMap = mutableMapOf<Fragment,String>()
-var Fragment.vlcSource: String
-    get() = playerSourceMap[this]?:""
-    set(value) {
-        playerSourceMap[this] = value
-    }
 
 fun Fragment.stopVLCPlayer(playerMap : HashMap<LibVLC, MediaPlayer>)
 {
@@ -41,7 +35,6 @@ fun Fragment.stopVLCPlayer(playerMap : HashMap<LibVLC, MediaPlayer>)
             playerMap[key]!!.release()
         }
     }
-    playerMap.clear()
 }
 
 fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaPlayer> {
@@ -70,6 +63,7 @@ fun Fragment.stopVLC(){
 }
 
 
+@SuppressLint("SdCardPath")
 fun Fragment.startVLC(
     source: String?,
     layout: VLCVideoLayout?,
@@ -87,16 +81,8 @@ fun Fragment.startVLC(
     Log.i(TAG, "auto restart = $autoRestart")
 
     if(source!=null)
-    {
-        if(vlcSource.isNotEmpty())
-        {
-            if(vlcSource.contains(source))
-                return
-        }
-    }
     if (activity != null) {
         activity?.runOnUiThread {
-            vlcSource=source!!
             val media: Media?
 
             val map = setVLCMediaPLayer(isLive)
@@ -113,14 +99,16 @@ fun Fragment.startVLC(
                     media = Media(mLibVLC, Uri.parse(source))
 
                     if (isLive) {
+                        media.setHWDecoderEnabled(true, true)
                         media.addOption(":network-caching=100")
                         media.addOption(":clock-jitter=0")
                         media.addOption(":clock-synchro=0")
                     }
+
+
                     this.media = media
                     updateVideoSurfaces()
                     videoScale = MediaPlayer.ScaleType.SURFACE_FILL
-                    media.setHWDecoderEnabled(true, true)
                     media.release()
                     setEventListener { event ->
                         try {
@@ -130,11 +118,11 @@ fun Fragment.startVLC(
                                     event.type
                                 )
                                 MediaPlayer.Event.Opening -> onCompletionListener.invoke(
-                                    "@Opening",
+                                    "@Opening $event.",
                                     event.type
                                 )
                                 MediaPlayer.Event.Buffering -> onCompletionListener.invoke(
-                                    "@Buffering",
+                                    "@Buffering ${event.buffering.roundToInt().toFloat()}",
                                     event.type
                                 )
                                 MediaPlayer.Event.Playing -> onCompletionListener.invoke(
@@ -170,10 +158,10 @@ fun Fragment.startVLC(
                                     mLibVLC!!.release()
                                 }
                                 MediaPlayer.Event.TimeChanged -> onCompletionListener.invoke(
-                                    "@TimeChanged: position= ${event.timeChanged / 1000L}", event.type
+                                    "@TimeChanged:  ${TimeUnit.MILLISECONDS.toMinutes(event.timeChanged) }", event.type
                                 )
                                 MediaPlayer.Event.PositionChanged -> onCompletionListener.invoke(
-                                    "@PositionChanged: ${Calendar.getInstance().time} +  =>  + ${source}, playing =$isPlaying",
+                                    "@PositionChanged:  ${event.positionChanged}  =>  + ${source}, playing =$isPlaying",
                                     event.type
                                 )
                                 MediaPlayer.Event.SeekableChanged -> onCompletionListener.invoke(
@@ -202,3 +190,4 @@ fun Fragment.startVLC(
         vlcPlayer = hashMapOf(mLibVLC!! to mMediaPlayer!!)
     }
 }
+

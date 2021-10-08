@@ -74,7 +74,7 @@ class DigitalSignageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mVideoLayout = view.findViewById(R.id.video_layout)
 
-        play(source23)
+//        play(source23)
     }
 
 
