@@ -41,6 +41,7 @@ fun Fragment.stopVLCPlayer(playerMap : HashMap<LibVLC, MediaPlayer>)
             playerMap[key]!!.release()
         }
     }
+    playerMap.clear()
 }
 
 fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaPlayer> {
@@ -64,6 +65,7 @@ fun Fragment.stopVLC(){
     vlcPlayer?.let {
         if(it.size > 0)
           stopVLCPlayer(it)
+
     }
 }
 
