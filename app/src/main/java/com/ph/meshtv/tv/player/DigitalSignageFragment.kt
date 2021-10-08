@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.MediaPlayer
 import org.videolan.libvlc.util.VLCVideoLayout
+import kotlin.math.roundToInt
 
 
 class DigitalSignageFragment : Fragment() {
@@ -20,6 +21,7 @@ class DigitalSignageFragment : Fragment() {
      val TAG = "DigitalSignageFragment"
 
      var mVideoLayout: VLCVideoLayout? = null
+     var progressFrame: View? = null
 
      val source1 = "file:///storage/emulated/0/Android/trailer_always_be_my_maybe.mp4"
      val source2 = "file:///storage/emulated/0/Android/full_always_be_my_maybe.mp4"
@@ -73,8 +75,8 @@ class DigitalSignageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mVideoLayout = view.findViewById(R.id.video_layout)
-
-//        play(source23)
+        progressFrame = view.findViewById(R.id.progress_frame)
+        //play(source23)
     }
 
 
@@ -86,7 +88,7 @@ class DigitalSignageFragment : Fragment() {
         * isLive = TRUE - if live source (eg. udp, rtsp, etc), FALSE if not
         * autoRestart = TRUE - restart forever, FALSE = play once
         */
-        startVLC(source=source, layout = mVideoLayout, isLive = false, autoRestart = true) { status,event ->
+        startVLC(source=source, layout = mVideoLayout, progressFrame =progressFrame, isLive = false, autoRestart = true) { status,event ->
                when(event){
                    MediaPlayer.Event.Stopped -> run{
                        Log.i(TAG, "@video completed")
@@ -94,6 +96,7 @@ class DigitalSignageFragment : Fragment() {
                    MediaPlayer.Event.EncounteredError -> run{
                        Log.i(TAG, "@video encountered error")
                    }
+
                }
                Log.v(TAG, status)
         }
