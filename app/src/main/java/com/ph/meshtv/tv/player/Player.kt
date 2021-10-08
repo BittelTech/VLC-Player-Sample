@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.MediaController
 import androidx.fragment.app.Fragment
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.MediaPlayer
@@ -74,6 +75,7 @@ fun Fragment.startVLC(
     source: String?,
     layout: VLCVideoLayout?,
     progressFrame : View?,
+    withController: Boolean = false,
     isLive: Boolean,
     autoRestart: Boolean,
     onCompletionListener: (String, Int) -> Unit
@@ -81,6 +83,7 @@ fun Fragment.startVLC(
     val TAG = this::class.java.simpleName
     var mLibVLC: LibVLC? = null
     var mMediaPlayer: MediaPlayer? = null
+    var mMediaController : MediaController?=null
 
     Log.i(TAG, "source = $source")
     Log.i(TAG, "layout = $layout")
@@ -110,8 +113,6 @@ fun Fragment.startVLC(
                             media.addOption(":clock-jitter=0")
                             media.addOption(":clock-synchro=0")
                         }
-
-
                         this.media = media
                         updateVideoSurfaces()
                         videoScale = MediaPlayer.ScaleType.SURFACE_FILL
@@ -151,20 +152,11 @@ fun Fragment.startVLC(
                                     MediaPlayer.Event.Stopped -> {
                                         onCompletionListener.invoke("@Stopped", event.type)
                                         if (autoRestart) {
-                                            startVLC(
-                                                source,
-                                                layout,
-                                                progressFrame,
-                                                isLive,
-                                                autoRestart,
-                                                onCompletionListener
-                                            )
+                                            play(media.uri)
                                         } else {
-                                            if (isPlaying)
-                                                stop()
-                                            detachViews()
-                                            release()
-                                            mLibVLC!!.release()
+                                            if (isPlaying) {
+                                               stopVLC()
+                                            }
                                         }
                                     }
                                     MediaPlayer.Event.EndReached -> onCompletionListener.invoke(
@@ -217,6 +209,61 @@ fun Fragment.startVLC(
                     }
                 }
 
+                if(withController) {
+                    mMediaController = MediaController(requireContext())
+                    mMediaController?.setMediaPlayer(object : MediaController.MediaPlayerControl {
+                        override fun start() {
+                            mMediaPlayer!!.play()
+                        }
+
+                        override fun pause() {
+                            mMediaPlayer!!.pause()
+                        }
+
+                        override fun getDuration(): Int {
+                            return mMediaPlayer!!.length.toInt()
+                        }
+
+                        override fun getCurrentPosition(): Int {
+                            val pos = mMediaPlayer!!.position
+                            return (pos * duration).toInt()
+                        }
+
+                        override fun seekTo(p0: Int) {
+                            mMediaPlayer!!.position = p0.toFloat() / duration
+                        }
+
+                        override fun isPlaying(): Boolean {
+                            return mMediaPlayer!!.isPlaying()
+                        }
+
+                        override fun getBufferPercentage(): Int {
+                            return 0
+                        }
+
+                        override fun canPause(): Boolean {
+                            return true
+                        }
+
+                        override fun canSeekBackward(): Boolean {
+                            return true
+                        }
+
+                        override fun canSeekForward(): Boolean {
+                            return true
+                        }
+
+                        override fun getAudioSessionId(): Int {
+                            return 0
+                        }
+
+
+                    })
+                    mMediaController?.setAnchorView(layout)
+                    layout?.setOnClickListener {
+                        mMediaController?.show(10000)
+                    }
+                }
             }
             vlcPlayer = hashMapOf(mLibVLC!! to mMediaPlayer!!)
         }
