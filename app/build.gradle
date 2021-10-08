@@ -45,4 +45,10 @@ dependencies {
     implementation files('libs/libvlc-android-1.088-6-debug.aar')
     implementation files('libs/libvlc-null-3.3.4.aar')
 
+
+
+    //Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
 }

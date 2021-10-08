@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.MediaPlayer
@@ -35,7 +34,6 @@ fun Fragment.stopVLCPlayer(playerMap: HashMap<LibVLC, MediaPlayer>) {
             playerMap[key]!!.release()
         }
     }
-    playerMap.clear()
 }
 
 fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaPlayer> {
@@ -50,7 +48,7 @@ fun Fragment.setVLCMediaPLayer(preventDeadLock: Boolean): HashMap<LibVLC, MediaP
     }
     args.add("-vvv")
     val libVlC = LibVLC(requireContext(), args)
-    map[libVlC] = MediaPlayer(LibVLC(requireContext(), args))
+    map[libVlC] = MediaPlayer(libVlC)
     return map
 }
 
@@ -59,10 +57,17 @@ fun Fragment.stopVLC() {
     vlcPlayer?.let {
         if (it.size > 0)
             stopVLCPlayer(it)
-
+        detachVLC()
     }
 }
 
+fun Fragment.detachVLC(){
+    vlcPlayer?.let {
+        if (it.size > 0)
+            it.keys.elementAt(0).release()
+
+    }
+}
 
 @SuppressLint("SdCardPath")
 fun Fragment.startVLC(
@@ -87,7 +92,6 @@ fun Fragment.startVLC(
             stopVLC()
             activity?.runOnUiThread {
                 val media: Media?
-
                 val map = setVLCMediaPLayer(isLive)
 
                 for (key in map.keys) {
@@ -183,10 +187,13 @@ fun Fragment.startVLC(
                                         }:${TimeUnit.MILLISECONDS.toSeconds(event.timeChanged)}",
                                         event.type
                                     )
-                                    MediaPlayer.Event.PositionChanged -> onCompletionListener.invoke(
-                                        "@PositionChanged:  ${event.positionChanged}  =>  + $source, playing =$isPlaying",
-                                        event.type
-                                    )
+                                    MediaPlayer.Event.PositionChanged -> {
+                                        onCompletionListener.invoke(
+                                            "@PositionChanged:  ${event.positionChanged}  =>  + $source, playing =$isPlaying",
+                                            event.type
+                                        )
+                                        updateVideoSurfaces()
+                                    }
                                     MediaPlayer.Event.SeekableChanged -> onCompletionListener.invoke(
                                         "@SeekableChanged: playing $isPlaying", event.type
                                     )
@@ -205,6 +212,7 @@ fun Fragment.startVLC(
                                 e.printStackTrace()
                             }
                         }
+                        Thread.sleep(500)
                         play()
                     }
                 }
