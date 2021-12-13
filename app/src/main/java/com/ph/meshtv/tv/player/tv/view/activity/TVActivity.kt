@@ -1,4 +1,4 @@
-package com.ph.meshtv.tv.player
+package com.ph.meshtv.tv.player.tv.view.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import com.ph.bittelasia.libvlc.control.listener.OnChangeListener
 import com.ph.bittelasia.libvlc.control.listener.OnFragmentListener
 import com.ph.bittelasia.libvlc.views.fragment.PlayerVLCFragment
+import com.ph.meshtv.tv.player.R
+import com.ph.meshtv.tv.player.tv.view.fragment.TVLivePlayerFragment
+import com.ph.meshtv.tv.player.tv.view.fragment.TVPlayerFragment
 
-class MainActivity : AppCompatActivity(), OnChangeListener, OnFragmentListener {
+class TVActivity : AppCompatActivity(), OnChangeListener, OnFragmentListener {
 
     private val TAG = "VLC-MainActivity"
 
@@ -24,9 +27,9 @@ class MainActivity : AppCompatActivity(), OnChangeListener, OnFragmentListener {
         setContentView(R.layout.main_activity_layout)
 
         if(!isLive) {
-            player = VLCPlayerFragment.player(source) //use this if not live
+            player = TVPlayerFragment.player(source) //use this if not live
         }else{
-            player = VLCLivePlayerFragment.player(source) //use this is live (eg. udp, rtsp, etc)
+            player = TVLivePlayerFragment.player(source) //use this is live (eg. udp, rtsp, etc)
         }
 
         supportFragmentManager.beginTransaction()

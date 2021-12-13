@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/player_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:keepScreenOn="true">
+    android:keepScreenOn="true"
+    app:layout_anchorGravity="center">
 
     <org.videolan.libvlc.util.VLCVideoLayout
         android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00050505"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        android:layout_gravity="center"/>
 
     <FrameLayout
         android:id="@+id/progress_frame"
@@ -25,6 +29,71 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateTint="#FA9731" />
+
+
     </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/status_frame"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="top"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <TextView
+            android:id="@+id/tv_channel_no"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:gravity="start|center|top"
+            android:paddingTop="10dp"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            tools:text="7" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:gravity="end|center|top"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/tv_channel_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40"
+                android:gravity="end|center"
+                android:textColor="@color/white"
+                tools:text="GMA" />
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:maxHeight="20dp"
+                android:maxWidth="20dp"
+                android:layout_gravity="end|top"
+                android:layout_weight="60"
+                android:scaleType="fitEnd"
+                tools:src="@drawable/ic_launcher_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="100dp"
+        android:textSize="14sp"
+        android:layout_gravity="bottom"
+        android:fontFamily="@font/croissant_one"
+        android:gravity="center|start"
+        android:textColor="@color/white"/>
 </FrameLayout>

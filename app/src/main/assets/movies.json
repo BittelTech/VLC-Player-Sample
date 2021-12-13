@@ -1,0 +1,650 @@
+[{
+  "movie_id": 1,
+  "rating": 5,
+  "title": "Always be my Maybe",
+  "trailer": "udp://@239.0.0.5:6010",
+  "full": "udp://@239.0.0.5:6010",
+  "poster": "file:///storage/emulated/0/Android/poster_always.jpg",
+  "description": "file:///storage/emulated/0/Android/description_always.txt",
+  "tag": [{
+    "genre": "Comedy"
+  },
+    {
+      "genre": "Romance"
+    }
+  ]
+},
+  {
+    "movie_id": 2,
+    "rating": 4,
+    "title": "Best Seller",
+    "trailer": "udp://@239.0.0.5:6010",
+    "full":  "udp://@239.0.0.5:6010",
+    "poster": "file:///storage/emulated/0/Android/poster_best_seller.jpg",
+    "description": "file:///storage/emulated/0/Android/description_best_seller.txt",
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Romance"
+      }
+    ]
+  },
+  {
+    "movie_id": 3,
+    "rating": 5,
+    "title": "Bird Box",
+    "trailer": "udp://@239.0.0.5:6010",
+    "full":  "udp://@239.0.0.5:6010",
+    "poster": "file:///storage/emulated/0/Android/poster_bird_box.jpg",
+    "description": "file:///storage/emulated/0/Android/description_bird_box.txt",
+    "tag": [{
+      "genre": "Horror"
+    },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+  },
+  {
+    "movie_id": 4,
+    "rating": 4,
+    "title": "Black Widow",
+    "trailer": "file:///storage/emulated/0/Android/trailer_black_widow.mp4",
+    "full": "file:///storage/emulated/0/Android/full_black_widow.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_black_widow.jpg",
+    "description": "file:///storage/emulated/0/Android/description_black_widow.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 5,
+    "rating": 5,
+    "title": "Boss Level",
+    "trailer": "file:///storage/emulated/0/Android/trailer_boss_level.mp4",
+    "full": "file:///storage/emulated/0/Android/full_boss_level.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_boss_level.jpg",
+    "description": "file:///storage/emulated/0/Android/description_boss_level.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Mystery"
+      },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 6,
+    "rating": 5,
+    "title": "Cruella",
+    "trailer": "file:///storage/emulated/0/Android/trailer_cruella.mp4",
+    "full": "file:///storage/emulated/0/Android/full_cruella.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_cruella.jpg",
+    "description": "file:///storage/emulated/0/Android/description_cruella.txt",
+    "tag": [{
+      "genre": "Adventure"
+    },
+      {
+        "genre": "Comedy"
+      },
+      {
+        "genre": "Crime"
+      }
+    ]
+  },
+  {
+    "movie_id": 7,
+    "rating": 5,
+    "title": "Don't Breath 2",
+    "trailer": "file:///storage/emulated/0/Android/trailer_dont_breath.mp4",
+    "full": "file:///storage/emulated/0/Android/full_dont_breath.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_dont_breath.jpg",
+    "description": "file:///storage/emulated/0/Android/description_dont_breath.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Drama"
+      },
+      {
+        "genre": "Horror"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 8,
+    "rating": 5,
+    "title": "Ex Machina",
+    "trailer": "file:///storage/emulated/0/Android/trailer_ex_machina.mp4",
+    "full": "file:///storage/emulated/0/Android/full_ex_machina.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_ex_machina.jpg",
+    "description": "file:///storage/emulated/0/Android/description_ex_machina.txt",
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Thriller"
+      },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+  },
+  {
+    "movie_id": 9,
+    "rating": 4,
+    "title": "Fast and Furious F9",
+    "trailer": "file:///storage/emulated/0/Android/trailer_fast_and_furios.mp4",
+    "full": "file:///storage/emulated/0/Android/full_fast_and_furios.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_fast_and_furios.jpg",
+    "description": "file:///storage/emulated/0/Android/description_fast_and_furios.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Thriller"
+      },
+      {
+        "genre": "Crime"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 10,
+    "rating": 5,
+    "title": "Free Guy",
+    "trailer": "file:///storage/emulated/0/Android/trailer_free_guy.mp4",
+    "full": "file:///storage/emulated/0/Android/full_free_guy.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_free_guy.png",
+    "description": "file:///storage/emulated/0/Android/description_free_guy.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Comedy"
+      },
+      {
+        "genre": "Adventure"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 11,
+    "rating": 5,
+    "title": "Godzilla vs Kong",
+    "trailer": "file:///storage/emulated/0/Android/trailer_godzilla.mp4",
+    "full": "file:///storage/emulated/0/Android/full_godzilla.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_godzilla.jpg",
+    "description": "file:///storage/emulated/0/Android/description_godzilla.txt",
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Thriller"
+      },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 13,
+    "rating": 5,
+    "title": "Green Knight",
+    "trailer": "file:///storage/emulated/0/Android/trailer_green_knight.mp4",
+    "full": "file:///storage/emulated/0/Android/full_green_knight.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_green_knight.png",
+    "description": "file:///storage/emulated/0/Android/description_green_knight.txt",
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Fantasy"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 14,
+    "rating": 5,
+    "title": "Invisible Man",
+    "trailer": "file:///storage/emulated/0/Android/trailer_invisible_man.mp4",
+    "full": "file:///storage/emulated/0/Android/full_invisible_man.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_invisible_man.jpg",
+    "description": "file:///storage/emulated/0/Android/description_invisible_man.txt",
+
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Horror"
+      },
+      {
+        "genre": "Mystery"
+      }
+    ]
+
+
+  },
+  {
+    "movie_id": 15,
+    "rating": 5,
+    "title": "Jungle Cruise",
+    "trailer": "file:///storage/emulated/0/Android/trailer_jungle_cruise.mp4",
+    "full": "file:///storage/emulated/0/Android/full_jungle_cruise.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_jungle_cruise.jpeg",
+    "description": "file:///storage/emulated/0/Android/decription_jungle_cruise.txt",
+
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+  },
+  {
+    "movie_id": 16,
+    "rating": 5,
+    "title": "Luca",
+    "trailer": "file:///storage/emulated/0/Android/trailer_luca.mp4",
+    "full": "file:///storage/emulated/0/Android/full_luca.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_luca.jpeg",
+    "description": "file:///storage/emulated/0/Android/description_luca.txt",
+    "tag": [{
+      "genre": "Animation"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+  },
+  {
+    "movie_id": 17,
+    "rating": 5,
+    "title": "Mortal Kombat",
+    "trailer": "file:///storage/emulated/0/Android/trailer_mortal_kombat.mp4",
+    "full": "file:///storage/emulated/0/Android/full_mortal_kombat.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_mortal_kombat.jpg",
+    "description": "file:///storage/emulated/0/Android/description_mortal_kombat.txt",
+    "tag": [{
+      "genre": "Fantasy"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+  },
+  {
+    "movie_id": 18,
+    "rating": 5,
+    "title": "My Son",
+    "trailer": "file:///storage/emulated/0/Android/trailer_my_son.mp4",
+    "full": "file:///storage/emulated/0/Android/full_my_son.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_my_son.jpg",
+    "description": "file:///storage/emulated/0/Android/description_my_son.txt",
+    "tag": [{
+      "genre": "Crime"
+    },
+      {
+        "genre": "Drama"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+  },
+  {
+    "movie_id": 19,
+    "rating": 5,
+    "title": "PAW Patrol the Movie",
+    "trailer": "file:///storage/emulated/0/Android/trailer_paw.mp4",
+    "full": "file:///storage/emulated/0/Android/full_paw.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_paw.png",
+    "description": "file:///storage/emulated/0/Android/description_paw.txt",
+    "tag": [{
+      "genre": "Animation"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+  },
+  {
+    "movie_id": 20,
+    "rating": 5,
+    "title": "Queenpins",
+    "trailer": "file:///storage/emulated/0/Android/trailer_queenpins.mp4",
+    "full": "file:///storage/emulated/0/Android/full_queenpins.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_queenpins.jpg",
+    "description": "file:///storage/emulated/0/Android/description_queenpins.txt",
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Horror"
+      },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+  },
+  {
+    "movie_id": 21,
+    "rating": 5,
+    "title": "Quiet Place 2",
+    "trailer": "file:///storage/emulated/0/Android/trailer_quiet_place.mp4",
+    "full": "file:///storage/emulated/0/Android/full_quiet_place.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_quiet_place.jpg",
+    "description": "file:///storage/emulated/0/Android/description_quiet_place.txt",
+    "tag": [{
+      "genre": "Drama"
+    },
+      {
+        "genre": "Comedy"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 22,
+    "rating": 5,
+    "title": "Reminiscence",
+    "trailer": "file:///storage/emulated/0/Android/trailer_reminiscence.mp4",
+    "full": "file:///storage/emulated/0/Android/full_reminiscence.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_reminiscence.jpg",
+    "description": "file:///storage/emulated/0/Android/description_reminiscence.txt",
+    "tag": [{
+      "genre": "Mystery"
+    },
+      {
+        "genre": "Romance"
+      },
+      {
+        "genre": "Sci-Fi"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 23,
+    "rating": 5,
+    "title": "Resort To Love",
+    "trailer": "file:///storage/emulated/0/Android/trailer_resort.mp4",
+    "full": "file:///storage/emulated/0/Android/full_resort.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_resort.jpg",
+    "description": "file:///storage/emulated/0/Android/description_resort.txt",
+    "tag": [{
+      "genre": "Comedy"
+    },
+      {
+        "genre": "Romance"
+      }
+    ]
+  },
+  {
+    "movie_id": 24,
+    "rating": 5,
+    "title": "The Starling",
+    "trailer": "file:///storage/emulated/0/Android/trailer_starling.mp4",
+    "full": "file:///storage/emulated/0/Android/full_starling.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_starling.jpg",
+    "description": "file:///storage/emulated/0/Android/description_starling.txt",
+    "tag": [{
+      "genre": "Comedy"
+    },
+      {
+        "genre": "Drama"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 25,
+    "rating": 5,
+    "title": "The Suicide Squad",
+    "trailer": "file:///storage/emulated/0/Android/trailer_suicide.mp4",
+    "full": "file:///storage/emulated/0/Android/full_suicide.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_suicide.jpeg",
+    "description": "file:///storage/emulated/0/Android/description_suicide.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 26,
+    "rating": 5,
+    "title": "The Card Counter",
+    "trailer": "file:///storage/emulated/0/Android/trailer_card_counter.mp4",
+    "full": "file:///storage/emulated/0/Android/full_card_counter.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_card_counter.png",
+    "description": "file:///storage/emulated/0/Android/description_card_counter.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Crime"
+      },
+      {
+        "genre": "Drama"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 27,
+    "rating": 5,
+    "title": "The Little Things",
+    "trailer": "file:///storage/emulated/0/Android/trailer_little.mp4",
+    "full": "file:///storage/emulated/0/Android/full_little.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_little.jpg",
+    "description": "file:///storage/emulated/0/Android/description_little.txt",
+    "tag": [{
+      "genre": "Mystery"
+    },
+      {
+        "genre": "Crime"
+      },
+      {
+        "genre": "Drama"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 28,
+    "rating": 5,
+    "title": "The Love Birds",
+    "trailer": "file:///storage/emulated/0/Android/trailer_love.mp4",
+    "full": "file:///storage/emulated/0/Android/full_love.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_love.jpg",
+    "description": "file:///storage/emulated/0/Android/description_love.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Crime"
+      },
+      {
+        "genre": "Comedy"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 29,
+    "rating": 5,
+    "title": "The Many Saints of Newark",
+    "trailer": "file:///storage/emulated/0/Android/trailer_many.mp4",
+    "full": "file:///storage/emulated/0/Android/full_many.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_many.jpg",
+    "description": "file:///storage/emulated/0/Android/description_many.txt",
+    "tag": [{
+      "genre": "Crime"
+    },
+      {
+        "genre": "Drama"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 30,
+    "rating": 5,
+    "title": "The Map of Tiny Perfect Things",
+    "trailer": "file:///storage/emulated/0/Android/trailer_map.mp4",
+    "full": "file:///storage/emulated/0/Android/full_map.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_map.jpg",
+    "description": "file:///storage/emulated/0/Android/description_map.txt",
+    "tag": [{
+      "genre": "Comedy"
+    },
+      {
+        "genre": "Fantasy"
+      },
+      {
+        "genre": "Romance"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 31,
+    "rating": 5,
+    "title": "The Night House",
+    "trailer": "file:///storage/emulated/0/Android/trailer_night.mp4",
+    "full": "file:///storage/emulated/0/Android/full_night.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_night.jpg",
+    "description": "file:///storage/emulated/0/Android/description_night.txt",
+    "tag": [{
+      "genre": "Horror"
+    },
+      {
+        "genre": "Mystery"
+      },
+      {
+        "genre": "Thriller"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 32,
+    "rating": 5,
+    "title": "The Tomorrow War",
+    "trailer": "file:///storage/emulated/0/Android/trailer_tomorrow.mp4",
+    "full": "file:///storage/emulated/0/Android/full_tomorrow.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_tomorrow.jpeg",
+    "description": "file:///storage/emulated/0/Android/description_tomorrow.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Drama"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 33,
+    "rating": 5,
+    "title": "To All The Boys I Loved Before",
+    "trailer": "file:///storage/emulated/0/Android/trailer_boys.mp4",
+    "full": "file:///storage/emulated/0/Android/full_boys.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_boys.jpg",
+    "description": "file:///storage/emulated/0/Android/description_boys.txt",
+    "tag": [{
+      "genre": "Comedy"
+    },
+      {
+        "genre": "Drama"
+      },
+      {
+        "genre": "Romance"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 34,
+    "rating": 5,
+    "title": "Wrath of Man",
+    "trailer": "file:///storage/emulated/0/Android/trailer_wrath.mp4",
+    "full": "file:///storage/emulated/0/Android/full_wrath.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_wrath.jpg",
+    "description": "file:///storage/emulated/0/Android/description_wrath.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Crime"
+      },
+      {
+        "genre": "Thriller"
+      }
+    ]
+
+  },
+  {
+    "movie_id": 35,
+    "rating": 5,
+    "title": "Znack Snyder's Justice League",
+    "trailer": "file:///storage/emulated/0/Android/trailer_znack.mp4",
+    "full": "file:///storage/emulated/0/Android/full_znack.mp4",
+    "poster": "file:///storage/emulated/0/Android/poster_znack.jpg",
+    "description": "file:///storage/emulated/0/Android/description_znack.txt",
+    "tag": [{
+      "genre": "Action"
+    },
+      {
+        "genre": "Adventure"
+      },
+      {
+        "genre": "Fantasy"
+      }
+    ]
+  }
+]

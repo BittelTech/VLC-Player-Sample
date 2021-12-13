@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Player" >
 
-        <activity android:name=".DigitalSignageActivity"
+        <activity android:name="com.ph.meshtv.tv.player.movie.view.activity.MovieActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter >
@@ -30,6 +30,10 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name=".tv.view.activity.TVActivity"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

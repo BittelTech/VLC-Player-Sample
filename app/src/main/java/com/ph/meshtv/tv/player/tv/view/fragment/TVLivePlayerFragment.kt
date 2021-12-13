@@ -1,4 +1,4 @@
-package com.ph.meshtv.tv.player
+package com.ph.meshtv.tv.player.tv.view.fragment
 
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
@@ -9,11 +9,11 @@ import com.ph.bittelasia.libvlc.views.fragment.PlayerVLCFragment
 
 @PlayerSettings(
     scaleType = ScaleType.SURFACE_FILL, //Video Scale
-    preventDeadLock = false, //required
+    preventDeadLock = true, //required
     enableDelay = false, //false if live, true if demo
     showStatus = true // show vlc logs
 )
-class VLCPlayerFragment : PlayerVLCFragment() {
+class TVLivePlayerFragment : PlayerVLCFragment() {
 
     var source : String? =null
 
@@ -22,15 +22,15 @@ class VLCPlayerFragment : PlayerVLCFragment() {
         var player : Fragment?=null
 
         @JvmStatic
-        fun player(@NonNull source : String?) : VLCPlayerFragment
+        fun player(@NonNull source : String?) : TVLivePlayerFragment
         {
-            player = player?:VLCPlayerFragment()
+            player = player ?: TVLivePlayerFragment()
 
-            if(player is VLCPlayerFragment){
-                (player as VLCPlayerFragment).source = source
+            if(player is TVLivePlayerFragment){
+                (player as TVLivePlayerFragment).source = source
             }
 
-           return player as VLCPlayerFragment
+            return player as TVLivePlayerFragment
         }
     }
 
